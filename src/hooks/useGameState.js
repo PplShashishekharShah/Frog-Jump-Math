@@ -17,7 +17,7 @@ function generatePuzzle(mode) {
 
   const col0Idx = [0, 3, 6, 9][randInt(0, 3)];
   const col1Idx = [1, 4, 7, 10][randInt(0, 3)];
-  const col2Idx = [2, 5, 8, 11][randInt(0, 3)];
+  const col2Idx = [2, 5, 8, 11][randInt(0, 3)]; 
 
   const path = [nums[col0Idx], nums[col1Idx], nums[col2Idx]];
   
@@ -74,15 +74,9 @@ export function useGameState() {
            return acc === 0 ? nums[idx] : acc * nums[idx];
         }, 0);
 
-        // Check if this move exceeds the target
+        // Check if this move exceeds the target (Prevent negative remaining)
         if (newValue > target) {
-            setLives(l => {
-                const nl = l - 1;
-                if (nl <= 0) setGameStatus('lost');
-                return Math.max(0, nl);
-            });
-            setLastAction('penalty-' + Date.now());
-            // Optionally: Auto jump back? Let's just stay but mark as penalty
+            setLastAction('invalid-' + Date.now());
             return; 
         }
 

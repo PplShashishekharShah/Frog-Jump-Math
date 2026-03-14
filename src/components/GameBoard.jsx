@@ -5,7 +5,11 @@ import { BG_IMG } from '../constants/images';
 import { GRID_ROWS, GRID_COLS } from '../constants/gameConstants';
 import frogJumpSound from '../assets/frog_jump_sound.mp3';
 
-const GameBoard = ({ nums, selected, target, remaining, lives, frogPos, lastAction, gameStatus, handleLeafClick, handleJumpBack, handleNewGame }) => {
+const GameBoard = ({ 
+  nums, selected, target, remaining, lives, frogPos, lastAction, gameStatus, 
+  handleLeafClick, handleJumpBack, handleNewGame, 
+  wonButtonText = 'Next Pond →' 
+}) => {
   const jumpSound = useRef(null);
   const splashSound = useRef(null);
   const failSound = useRef(null);
@@ -111,7 +115,7 @@ const GameBoard = ({ nums, selected, target, remaining, lives, frogPos, lastActi
                  onClick={() => handleNewGame()}
                  style={resultButtonStyle(gameStatus === 'won' ? '#4CAF50' : '#FF9800')}
                >
-                 {gameStatus === 'won' ? 'Next Pond →' : 'Try Again ↩'}
+                 {gameStatus === 'won' ? wonButtonText : 'Try Again ↩'}
                </button>
              </div>
            </div>

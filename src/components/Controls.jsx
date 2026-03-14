@@ -24,25 +24,25 @@ const Controls = ({ mode, toggleMode, handleJumpBack, canUndo }) => {
 
 const controlsContainerStyle = {
   display: 'flex',
-  gap: '20px',
-  marginTop: '20px',
+  gap: '15px', // Smaller gap
+  marginTop: '20px', // Smaller margin
   justifyContent: 'center'
 };
 
 const baseButtonStyle = {
-  padding: '15px 35px',
-  borderRadius: '20px',
+  padding: '10px 35px', // Smaller padding
+  borderRadius: '15px',
   border: 'none',
   color: 'white',
-  fontSize: '1.4rem',
+  fontSize: '1.2rem', // Smaller text
   fontWeight: 'bold',
   cursor: 'pointer',
   transition: 'transform 0.1s, box-shadow 0.1s',
   display: 'flex',
   alignItems: 'center',
-  gap: '10px',
+  gap: '8px',
   fontFamily: 'cursive',
-  boxShadow: '0 8px 0 rgba(0,0,0,0.2)'
+  boxShadow: '0 6px 0 rgba(0,0,0,0.2)'
 };
 
 const blueButtonStyle = {
