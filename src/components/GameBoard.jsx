@@ -11,6 +11,7 @@ const GameBoard = ({ nums, selected, target, remaining, lives, frogPos, lastActi
   const failSound = useRef(null);
   const [heartAnim, setHeartAnim] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
+  const [isDamageFlashing, setIsDamageFlashing] = useState(false);
 
   useEffect(() => {
     jumpSound.current = new Audio(frogJumpSound);
@@ -26,7 +27,11 @@ const GameBoard = ({ nums, selected, target, remaining, lives, frogPos, lastActi
       } else if (lastAction?.startsWith('penalty')) {
           failSound.current?.play().catch(() => {});
           setHeartAnim(true);
-          setTimeout(() => setHeartAnim(false), 500);
+          setIsDamageFlashing(true);
+          setTimeout(() => {
+            setHeartAnim(false);
+            setIsDamageFlashing(false);
+          }, 1000);
           if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
       } else if (lastAction?.startsWith('invalid')) {
           setIsShaking(true);
@@ -54,6 +59,9 @@ const GameBoard = ({ nums, selected, target, remaining, lives, frogPos, lastActi
   return (
     <div style={containerStyle}>
       <div className={isShaking ? 'shake-board' : ''} style={boardStyle}>
+        {/* Red Flash Overlay for Heart Deduction */}
+        {isDamageFlashing && <div style={damageFlashStyle} />}
+
         {/* Statistics Overlays - Move up slightly based on user fix */}
         <div style={{ ...overlayValueStyle, left: '37.5%', top: '2.5%' }}>{target}</div>
         <div style={{ ...overlayValueStyle, left: '64%', top: '2.5%' }}>{remaining}</div>
@@ -126,6 +134,11 @@ const GameBoard = ({ nums, selected, target, remaining, lives, frogPos, lastActi
           .shake-board {
             animation: shake 0.5s;
           }
+          @keyframes flash-anim {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+          }
         `}</style>
       </div>
     </div>
@@ -179,6 +192,15 @@ const overlayValueStyle = {
 };
 const heartContainerStyle = {
   position: 'absolute', top: '15px', display: 'flex', gap: '15px', zIndex: 30
+};
+
+const damageFlashStyle = {
+  position: 'absolute',
+  inset: 0,
+  backgroundColor: 'rgba(255, 0, 0, 0.4)',
+  zIndex: 10,
+  pointerEvents: 'none',
+  animation: 'flash-anim 1s ease-out forwards'
 };
 
 export default GameBoard;
