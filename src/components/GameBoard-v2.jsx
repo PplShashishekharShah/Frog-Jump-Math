@@ -127,8 +127,10 @@ const GameBoardV2 = ({
           const col = i % GRID_COLS;
           // Sink logic: 
           // 1. All sink if game is won
-          // 2. Otherwise, only pads in columns strictly less than the current selection count sink (unless they are selected)
-          const isSunk = (gameStatus === 'won') ? true : (col < selected.length && !selected.includes(i));
+          // 2. Sink future columns that are not yet reachable (col > selected.length)
+          // 3. Sink previous columns' unselected pads
+          const isSunk = (gameStatus === 'won') ? true : 
+                         (col > selected.length || (col < selected.length && !selected.includes(i)));
           
           return (
             <div key={i} style={{ position: 'absolute', ...pos, transform: 'translate(-50%, -50%)', zIndex: 10 }}>
@@ -223,7 +225,7 @@ const overwriteLabelStyle = {
   top: '32px',
   left: '52.5%',
   background: '#f7ecdaff', // Match background beige/yellow or white
-  padding: '-25px 12px',
+  padding: '2px 12px',
   // borderRadius: '10px',
   fontSize: '1rem',
   fontWeight: 'bold',
