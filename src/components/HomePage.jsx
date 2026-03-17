@@ -1,7 +1,7 @@
 import React from 'react';
 import { FROG_IMG } from '../constants/images';
 
-const HomePage = ({ onStart, onTutorial }) => {
+const HomePage = ({ onStart, onStartV2, onTutorial }) => {
   return (
     <div style={containerStyle}>
       <div style={cardStyle}>
@@ -13,10 +13,13 @@ const HomePage = ({ onStart, onTutorial }) => {
 
         <div style={buttonContainerStyle}>
             <button onClick={onStart} style={primaryButtonStyle}>
-            Start Game 🐸
+              Start Game 🐸
+            </button>
+            <button onClick={onStartV2} style={v2ButtonStyle}>
+              Play V2 🚀
             </button>
             <button onClick={onTutorial} style={secondaryButtonStyle}>
-            How to Play 🎯
+              How to Play 🎯
             </button>
         </div>
       </div>
@@ -125,6 +128,15 @@ const secondaryButtonStyle = {
   background: '#2196F3',
   color: 'white',
   borderBottom: '8px solid #1565C0'
+};
+
+const v2ButtonStyle = {
+  ...buttonBaseStyle,
+  background: 'linear-gradient(135deg, #FF9800, #e65100)',
+  color: 'white',
+  borderBottom: '8px solid #bf360c',
+  position: 'relative',
+  overflow: 'hidden',
 };
 
 export default HomePage;
