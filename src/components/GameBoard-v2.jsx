@@ -2,21 +2,21 @@ import React, { useEffect, useRef, useState } from 'react';
 import LilyPadV2 from './LilyPad-v2';
 import Frog from './Frog';
 import PathLine from './PathLine';
-import { BG_V2_IMG } from '../constants/images';
+import { BG_V2_IMG, START_LABEL_IMG } from '../constants/images';
 import { GRID_ROWS, GRID_COLS, MODES } from '../constants/gameConstants';
 import frogJumpSound from '../assets/frog_jump_sound.mp3';
 
 const BOARD_WIDTH = 900;
 const BOARD_HEIGHT = 600;
 
-// Compressed pad positions (closer together)
+
 const padPositions = [
   { top: '30%', left: '35%' }, { top: '45%', left: '34.5%' }, { top: '62%', left: '34%' }, { top: '79%', left: '33%' },
   { top: '30%', left: '50%' }, { top: '45%', left: '50%' }, { top: '62%', left: '50%' }, { top: '79%', left: '50%' },
   { top: '30%', left: '65%' }, { top: '45%', left: '65.5%' }, { top: '62%', left: '66%' }, { top: '79%', left: '67%' },
 ];
 
-const startPos = { top: '82%', left: '9.5%' };
+const startPos = { top: '55%', left: '20%' };
 const goalPos = { top: '33%', left: '92%' };
 
 const GameBoardV2 = ({
@@ -88,6 +88,15 @@ const GameBoardV2 = ({
       <div className={isShaking ? 'shake-board' : ''} style={boardStyle}>
         {isDamageFlashing && <div style={damageFlashStyle} />}
 
+        {/* Start Label Image */}
+        <div style={{ position: 'absolute', top: '40%', left: '0.5%', transform: 'translateY(-50%)', zIndex: 5 }}>
+          <img src={START_LABEL_IMG} alt="Start" style={{ width: '120px', opacity: 0.99 }} />
+        </div>
+
+        {/* Vertical Separator Lines */}
+        <div style={{ ...vLineStyle, left: '42%' }} />
+        <div style={{ ...vLineStyle, left: '58%' }} />
+
         <PathLine
           selected={selected}
           padPositions={Array.from({ length: 12 }, (_, i) => numsIndexToPadPos(i))}
@@ -98,6 +107,11 @@ const GameBoardV2 = ({
 
         {/* Statistics Overlays */}
         <div style={{ ...overlayValueStyle, left: '37.5%', top: '3.5%' }}>{target}</div>
+        
+        {/* Overwrite 'Remaining' with 'More no.s' */}
+        <div style={overwriteLabelStyle}>
+          {mode === MODES.ADDITION ? 'More to Add' : 'More no.s to Mult'}
+        </div>
         <div style={{ ...overlayValueStyle, left: '64.2%', top: '3.5%' }}>{remaining}</div>
 
         <div style={{ ...heartContainerStyle, left: '100px', transform: heartAnim ? 'scale(1.3) rotate(5deg)' : 'scale(1)', transition: 'transform 0.2s' }}>
@@ -193,6 +207,30 @@ const boardStyle = {
   backgroundImage: `url(${BG_V2_IMG})`, backgroundSize: '100% 100%',
   borderRadius: '20px', boxShadow: '0 20px 50px rgba(0,0,0,0.6)',
   overflow: 'hidden', border: '10px solid #2e7d32',
+};
+
+const vLineStyle = {
+  position: 'absolute',
+  top: '20%',
+  bottom: '15%',
+  width: '3px',
+  borderLeft: '3px dashed rgba(255, 255, 255, 0.4)',
+  zIndex: 1,
+};
+
+const overwriteLabelStyle = {
+  position: 'absolute',
+  top: '32px',
+  left: '52.5%',
+  background: '#f7ecdaff', // Match background beige/yellow or white
+  padding: '-25px 12px',
+  // borderRadius: '10px',
+  fontSize: '1rem',
+  fontWeight: 'bold',
+  color: '#3e2723',
+  zIndex: 19,
+  fontFamily: 'Comic Sans MS, cursive',
+  // boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
 };
 
 const equationBoxStyle = {
