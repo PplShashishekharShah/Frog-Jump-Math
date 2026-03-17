@@ -13,7 +13,7 @@ const HomePage = ({ onStart, onStartV2, onTutorial }) => {
 
         <div style={buttonContainerStyle}>
             <button onClick={onStart} style={primaryButtonStyle}>
-              Start Game 🐸
+              Start Game 🐸 (V1)
             </button>
             <button onClick={onStartV2} style={v2ButtonStyle}>
               Play V2 🚀
