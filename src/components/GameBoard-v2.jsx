@@ -136,10 +136,10 @@ const GameBoardV2 = ({
         </div> */}
         <div style={{ ...overlayValueStyle, left: '72%', top: '4%' }}>{remaining}</div>
 
-        <div style={{ ...heartContainerStyle, left: '100px', transform: heartAnim ? 'scale(1.3) rotate(5deg)' : 'scale(1)', transition: 'transform 0.2s' }}>
+        <div style={{ ...heartContainerStyle, left: '80px', transform: heartAnim ? 'scale(1.3) rotate(5deg)' : 'scale(1)', transition: 'transform 0.2s' }}>
           {Array.from({ length: 3 }).map((_, i) => (
-            <span key={i} style={{ color: i < lives ? '#ff4444' : '#444', fontSize: '2.5rem', textShadow: '0 0 10px rgba(0,0,0,0.5)' }}>
-              ♥
+            <span key={i} style={{ color: i < lives ? '#ff4444' : '#444', fontSize: '3rem', textShadow: '0 0 10px rgba(0,0,0,0.5)' }}>
+              ❤
             </span>
           ))}
         </div>
