@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import LilyPad from './LilyPad';
 import Frog from './Frog';
-import { BG_IMG } from '../constants/images';
+import PathLine from './PathLine';
+import { BG_IMG, START_LABEL_IMG } from '../constants/images';
 import { GRID_ROWS, GRID_COLS } from '../constants/gameConstants';
 import frogJumpSound from '../assets/frog_jump_sound.mp3';
 
@@ -51,7 +52,7 @@ const GameBoard = ({
   ];
 
   const getPosition = (pos) => {
-    if (pos === 'start') return { top: '82%', left: '9.5%' };
+    if (pos === 'start') return { top: '55%', left: '16%' };
     if (pos === 'goal') return { top: '33%', left: '92%' };
     
     const col = pos % GRID_COLS;
@@ -60,11 +61,30 @@ const GameBoard = ({
     return padPositions[posIndex];
   };
 
+  const numsIndexToPadPos = (i) => {
+    const col = i % GRID_COLS;
+    const row = Math.floor(i / GRID_COLS);
+    return padPositions[col * GRID_ROWS + row];
+  };
+
   return (
     <div style={containerStyle}>
       <div className={isShaking ? 'shake-board' : ''} style={boardStyle}>
         {/* Red Flash Overlay for Heart Deduction */}
         {isDamageFlashing && <div style={damageFlashStyle} />}
+
+        {/* Start Label Image */}
+        <div style={{ position: 'absolute', top: '35%', left: '3%', transform: 'translateY(-50%)', zIndex: 5 }}>
+          <img src={START_LABEL_IMG} alt="Start" style={{ width: '130px', opacity: 0.95 }} />
+        </div>
+
+        <PathLine
+          selected={selected}
+          padPositions={Array.from({ length: 12 }, (_, i) => numsIndexToPadPos(i))}
+          boardWidth={900}
+          boardHeight={600}
+          startPos={{ top: '55%', left: '16%' }}
+        />
 
         {/* Statistics Overlays - Move up slightly based on user fix */}
         <div style={{ ...overlayValueStyle, left: '37.5%', top: '2.5%' }}>{target}</div>
@@ -82,7 +102,7 @@ const GameBoard = ({
         {nums.map((num, i) => {
           const pos = getPosition(i);
           return (
-            <div key={i} style={{ position: 'absolute', ...pos, transform: 'translate(-50%, -50%)', zIndex: 5 }}>
+            <div key={i} style={{ position: 'absolute', ...pos, transform: 'translate(-50%, -50%)', zIndex: 10 }}>
               <LilyPad 
                 index={i}
                 value={num}

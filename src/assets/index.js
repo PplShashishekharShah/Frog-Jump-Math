@@ -1,6 +1,6 @@
 import frogImg from './frog.png';
 import bgImg from './background2.png';
-import bgWithoutLilypadImg from './background_without_lilypad.png';
+import bgWithoutLilypadImg from './final_background_without_lilypad.png';
 import lilypadImg from './lilypad.png';
 import startLabelImg from './start_label.png';
 

@@ -6,8 +6,8 @@ const LilyPadV2 = ({ value, isSelected, isSunk, onClick, index }) => {
     <div 
       onClick={() => onClick(index)}
       style={{
-        width: '140px',
-        height: '110px',
+        width: '180px',
+        height: '140px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -41,7 +41,7 @@ const LilyPadV2 = ({ value, isSelected, isSunk, onClick, index }) => {
         position: 'relative',
         zIndex: 2,
         color: '#fff',
-        fontSize: '1.8rem',
+        fontSize: '2.2rem',
         fontWeight: 'bold',
         textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
         fontFamily: 'Comic Sans MS, cursive',

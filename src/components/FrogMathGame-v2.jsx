@@ -34,13 +34,6 @@ const FrogMathGameV2 = ({ onBackToHome }) => {
 
   return (
     <div style={containerStyle}>
-      <div style={titleAreaStyle}>
-        <div style={modeBadgeStyle}>
-           {mode === 'addition' ? '✨ ADDITION POND' : '🌀 MULTIPLICATION POND'}
-        </div>
-        <h1 style={titleStyle}>Frog Jump Math <span style={v2BadgeStyle}>V2</span></h1>
-      </div>
-
       <GameBoardV2
         mode={mode}
         nums={nums}
@@ -55,13 +48,6 @@ const FrogMathGameV2 = ({ onBackToHome }) => {
         handleJumpBack={handleJumpBack}
         handleNewGame={handleNewGame}
       />
-
-      <Controls
-        mode={mode}
-        toggleMode={toggleMode}
-        handleJumpBack={handleJumpBack}
-        canUndo={selected.length > 0}
-      />
     </div>
   );
 };
@@ -70,10 +56,10 @@ const containerStyle = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  padding: '30px 10px 5px',
   minHeight: '100vh',
-  width: '100%',
+  width: '100vw',
   background: '#1b5e20',
+  overflow: 'hidden',
 };
 const titleAreaStyle = {
   display: 'flex',

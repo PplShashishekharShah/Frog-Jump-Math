@@ -9,7 +9,6 @@ import frogJumpSound from '../assets/frog_jump_sound.mp3';
 const BOARD_WIDTH = 900;
 const BOARD_HEIGHT = 600;
 
-
 const padPositions = [
   { top: '30%', left: '35%' }, { top: '45%', left: '34.5%' }, { top: '62%', left: '34%' }, { top: '79%', left: '33%' },
   { top: '30%', left: '50%' }, { top: '45%', left: '50%' }, { top: '62%', left: '50%' }, { top: '79%', left: '50%' },
@@ -73,6 +72,19 @@ const GameBoardV2 = ({
     return padPositions[col * GRID_ROWS + row];
   };
 
+  const [windowSize, setWindowSize] = useState({ 
+    width: window.innerWidth, 
+    height: window.innerHeight 
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const renderEquation = () => {
     const op = mode === MODES.ADDITION ? '+' : '×';
     const parts = [0, 1, 2].map(i => {
@@ -83,14 +95,24 @@ const GameBoardV2 = ({
     return `${parts[0]} ${op} ${parts[1]} ${op} ${parts[2]} = ${currSum}`;
   };
 
+  const canUndo = selected.length > 0;
+
   return (
     <div style={containerStyle}>
       <div className={isShaking ? 'shake-board' : ''} style={boardStyle}>
         {isDamageFlashing && <div style={damageFlashStyle} />}
 
+        {/* Embedded Title UI */}
+        {/* <div style={embeddedHeaderStyle}>
+          <div style={embeddedModeBadgeStyle}>
+            {mode === MODES.ADDITION ? '✨ ADDITION POND' : '🌀 MULTIPLICATION POND'}
+          </div>
+          <h1 style={embeddedTitleStyle}>Frog Jump Math <span style={v2BadgeStyle}>V2</span></h1>
+        </div> */}
+
         {/* Start Label Image */}
         <div style={{ position: 'absolute', top: '40%', left: '0.5%', transform: 'translateY(-50%)', zIndex: 5 }}>
-          <img src={START_LABEL_IMG} alt="Start" style={{ width: '120px', opacity: 0.99 }} />
+          <img src={START_LABEL_IMG} alt="Start" style={{ width: '160px', opacity: 0.99 }} />
         </div>
 
         {/* Vertical Separator Lines */}
@@ -100,8 +122,8 @@ const GameBoardV2 = ({
         <PathLine
           selected={selected}
           padPositions={Array.from({ length: 12 }, (_, i) => numsIndexToPadPos(i))}
-          boardWidth={BOARD_WIDTH}
-          boardHeight={BOARD_HEIGHT}
+          boardWidth={windowSize.width}
+          boardHeight={windowSize.height}
           startPos={startPos}
         />
 
@@ -109,10 +131,10 @@ const GameBoardV2 = ({
         <div style={{ ...overlayValueStyle, left: '37.5%', top: '3.5%' }}>{target}</div>
         
         {/* Overwrite 'Remaining' with 'More no.s' */}
-        <div style={overwriteLabelStyle}>
+        {/* <div style={overwriteLabelStyle}>
           {mode === MODES.ADDITION ? 'More to Add' : 'More no.s to Mult'}
-        </div>
-        <div style={{ ...overlayValueStyle, left: '64.2%', top: '3.5%' }}>{remaining}</div>
+        </div> */}
+        <div style={{ ...overlayValueStyle, left: '71%', top: '3.5%' }}>{remaining}</div>
 
         <div style={{ ...heartContainerStyle, left: '100px', transform: heartAnim ? 'scale(1.3) rotate(5deg)' : 'scale(1)', transition: 'transform 0.2s' }}>
           {Array.from({ length: 3 }).map((_, i) => (
@@ -125,10 +147,6 @@ const GameBoardV2 = ({
         {nums.map((num, i) => {
           const pos = getPosition(i);
           const col = i % GRID_COLS;
-          // Sink logic: 
-          // 1. All sink if game is won
-          // 2. Sink future columns that are not yet reachable (col > selected.length)
-          // 3. Sink previous columns' unselected pads
           const isSunk = (gameStatus === 'won') ? true : 
                          (col > selected.length || (col < selected.length && !selected.includes(i)));
           
@@ -147,11 +165,22 @@ const GameBoardV2 = ({
 
         <Frog pos={getPosition(frogPos)} isShaking={isShaking} />
 
-        {/* Live Equation Box at Bottom */}
+        {/* Live Equation Box at Bottom Left-ish */}
         <div style={equationBoxStyle}>
           <div style={equationContentStyle}>
             {renderEquation()}
           </div>
+        </div>
+
+        {/* Embedded Jump Back Button at Bottom Right-ish */}
+        <div style={jumpBackContainerStyle}>
+          <button 
+            onClick={handleJumpBack} 
+            disabled={!canUndo}
+            style={canUndo ? goldButtonStyle : { ...goldButtonStyle, opacity: 0.5, cursor: 'not-allowed' }}
+          >
+            ↩ Jump Back
+          </button>
         </div>
 
         {gameStatus !== 'playing' && (
@@ -194,8 +223,8 @@ const GameBoardV2 = ({
             100% { opacity: 0; }
           }
           @keyframes popIn {
-            from { transform: scale(0.8) translateX(-50%); opacity: 0; }
-            to { transform: scale(1) translateX(-50%); opacity: 1; }
+            from { transform: scale(0.8) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
           }
         `}</style>
       </div>
@@ -203,83 +232,86 @@ const GameBoardV2 = ({
   );
 };
 
-const containerStyle = { display: 'flex', justifyContent: 'center', padding: '10px', width: '100%' };
+// Full Screen Layout Styles
+const containerStyle = { width: '100vw', height: '100vh', overflow: 'hidden' };
 const boardStyle = {
-  position: 'relative', width: `${BOARD_WIDTH}px`, height: `${BOARD_HEIGHT}px`,
+  position: 'relative', width: '100%', height: '100%',
   backgroundImage: `url(${BG_V2_IMG})`, backgroundSize: '100% 100%',
-  borderRadius: '20px', boxShadow: '0 20px 50px rgba(0,0,0,0.6)',
-  overflow: 'hidden', border: '10px solid #2e7d32',
+  backgroundPosition: 'center', overflow: 'hidden'
+};
+
+const embeddedHeaderStyle = {
+  position: 'absolute', top: '10px', left: '50%', transform: 'translateX(-50%)',
+  display: 'flex', alignItems: 'center', gap: '20px', zIndex: 30, textAlign: 'center'
+};
+const embeddedTitleStyle = {
+  color: '#fff', fontSize: '2rem', margin: '0', textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+  fontFamily: 'cursive', display: 'flex', alignItems: 'center', gap: '10px'
+};
+const embeddedModeBadgeStyle = {
+  background: 'rgba(255, 255, 255, 0.4)', color: '#fff', padding: '3px 12px',
+  borderRadius: '12px', fontSize: '1rem', fontWeight: 'bold', fontFamily: 'cursive',
+  border: '2px solid rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(4px)'
+};
+const v2BadgeStyle = {
+  background: '#FF9800', color: '#fff', borderRadius: '8px', padding: '2px 8px',
+  fontSize: '0.9rem', fontWeight: 'bold', letterSpacing: '1px', boxShadow: '0 2px 6px rgba(0,0,0,0.3)'
 };
 
 const vLineStyle = {
-  position: 'absolute',
-  top: '20%',
-  bottom: '15%',
-  width: '3px',
-  borderLeft: '3px dashed rgba(255, 255, 255, 0.4)',
-  zIndex: 1,
+  position: 'absolute', top: '20%', bottom: '15%', width: '3px',
+  borderLeft: '3px dashed rgba(255, 255, 255, 0.4)', zIndex: 1
 };
 
 const overwriteLabelStyle = {
-  position: 'absolute',
-  top: '32px',
-  left: '52.5%',
-  background: '#f7ecdaff', // Match background beige/yellow or white
-  padding: '2px 12px',
-  // borderRadius: '10px',
-  fontSize: '1rem',
-  fontWeight: 'bold',
-  color: '#3e2723',
-  zIndex: 19,
-  fontFamily: 'Comic Sans MS, cursive',
-  // boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+  position: 'absolute', top: '22px', left: '52.5%', background: '#f7ecdaff',
+  padding: '2px 12px', fontSize: '0.9rem', fontWeight: 'bold', color: '#3e2723',
+  zIndex: 19, fontFamily: 'Comic Sans MS, cursive'
 };
 
 const equationBoxStyle = {
-  position: 'absolute',
-  bottom: '5px',
-  left: '50%',
-  transform: 'translateX(-50%)',
-  background: 'rgba(255, 255, 255, 0.9)',
-  padding: '5px 20px',
-  borderRadius: '15px',
-  boxShadow: '0 5px 15px rgba(0,0,0,0.2)',
-  border: '3px solid #4CAF50',
-  animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-  zIndex: 30,
-  textAlign: 'center',
+  position: 'absolute', bottom: '20px', left: '41%',
+  background: 'rgba(255, 255, 255, 0.9)', padding: '10px 25px', borderRadius: '20px',
+  boxShadow: '0 8px 20px rgba(0,0,0,0.2)', border: '4px solid #4CAF50',
+  animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)', zIndex: 30
+};
+const equationContentStyle = {
+  fontSize: '2rem', color: '#1b5e20', fontWeight: 'bold', fontFamily: 'Comic Sans MS, cursive'
 };
 
-const equationContentStyle = {
-  fontSize: '1.8rem',
-  color: '#1b5e20',
-  fontWeight: 'bold',
-  fontFamily: 'Comic Sans MS, cursive',
+const jumpBackContainerStyle = {
+  position: 'absolute', bottom: '25px', right: '12%', zIndex: 30
+};
+const goldButtonStyle = {
+  padding: '12px 30px', borderRadius: '15px', border: 'none', color: 'white',
+  background: '#c09a06', borderBottom: '6px solid #8b6e00', fontSize: '1.2rem',
+  fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center',
+  gap: '8px', fontFamily: 'cursive', boxShadow: '0 6px 0 rgba(0,0,0,0.2)'
 };
 
 const overlayValueStyle = {
   position: 'absolute', width: '100px', textAlign: 'center',
   fontSize: '2.5rem', fontWeight: 'bold', color: '#1B5E20', zIndex: 20,
-  fontFamily: 'Comic Sans MS, cursive',
+  fontFamily: 'Comic Sans MS, cursive'
 };
 const heartContainerStyle = {
-  position: 'absolute', top: '15px', display: 'flex', gap: '15px', zIndex: 30,
+  position: 'absolute', top: '15px', display: 'flex', gap: '15px', zIndex: 30
 };
 const resultOverlayStyle = {
   position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.4)',
-  display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, backdropFilter: 'blur(3px)',
+  display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, backdropFilter: 'blur(3px)'
 };
 const resultBoxStyle = {
   background: '#fff', padding: '40px', borderRadius: '30px', textAlign: 'center',
-  boxShadow: '0 15px 40px rgba(0,0,0,0.3)', border: '6px solid #4CAF50', maxWidth: '350px', fontFamily: 'cursive',
+  boxShadow: '0 15px 40px rgba(0,0,0,0.3)', border: '6px solid #4CAF50', maxWidth: '350px', fontFamily: 'cursive'
 };
 const resultButtonStyle = (color) => ({
   background: color, color: 'white', border: 'none', padding: '12px 30px', borderRadius: '15px',
-  fontSize: '1.2rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 5px 0 rgba(0,0,0,0.2)',
+  fontSize: '1.2rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 5px 0 rgba(0,0,0,0.2)'
 });
 const damageFlashStyle = {
   position: 'absolute', inset: 0, backgroundColor: 'rgba(255,0,0,0.4)', zIndex: 10,
-  pointerEvents: 'none', animation: 'flash-anim 1s ease-out forwards',
+  pointerEvents: 'none', animation: 'flash-anim 1s ease-out forwards'
 };
 
 export default GameBoardV2;
