@@ -41,7 +41,7 @@ const baseButtonStyle = {
   display: 'flex',
   alignItems: 'center',
   gap: '8px',
-  fontFamily: 'cursive',
+  fontFamily: "'Lexend', sans-serif",
   boxShadow: '0 6px 0 rgba(0,0,0,0.2)'
 };
 

@@ -201,17 +201,17 @@ const handCursorStyle = {
     position: 'absolute', fontSize: '3rem', zIndex: 200, animation: 'click-tilt 1s infinite'
 };
 
-const titleStyle = { color: 'white', fontFamily: 'cursive', margin: 0, fontSize: '1.5rem' };
-const stepIndicatorStyle = { color: '#c0ffc0', fontFamily: 'cursive', fontSize: '0.85rem' };
+const titleStyle = { color: 'white', fontFamily: "'Lexend', sans-serif", margin: 0, fontSize: '1.5rem' };
+const stepIndicatorStyle = { color: '#c0ffc0', fontFamily: "'Lexend', sans-serif", fontSize: '0.85rem' };
 
 const messageBoxStyle = {
-    background: 'white', padding: '6px 15px', borderRadius: '20px', marginBottom: '2px', boxShadow: '0 6px 12px rgba(0,0,0,0.25)', fontSize: '1.2rem', fontFamily: 'cursive', color: '#2e7d32', border: '3px solid #4CAF50', minWidth: '450px', textAlign: 'center', zIndex: 10
+    background: 'white', padding: '6px 15px', borderRadius: '20px', marginBottom: '2px', boxShadow: '0 6px 12px rgba(0,0,0,0.25)', fontSize: '1.2rem', fontFamily: "'Lexend', sans-serif", color: '#2e7d32', border: '3px solid #4CAF50', minWidth: '450px', textAlign: 'center', zIndex: 10
 };
 
 const footerStyle = { display: 'flex', gap: '15px', marginTop: '0' };
 
 const baseButtonStyle = {
-    padding: '10px 30px', borderRadius: '18px', border: 'none', fontSize: '1.2rem', fontWeight: 'bold', cursor: 'pointer', fontFamily: 'cursive', boxShadow: '0 5px 0 rgba(0,0,0,0.2)'
+    padding: '10px 30px', borderRadius: '18px', border: 'none', fontSize: '1.2rem', fontWeight: 'bold', cursor: 'pointer', fontFamily: "'Lexend', sans-serif", boxShadow: '0 5px 0 rgba(0,0,0,0.2)'
 };
 
 const nextButtonStyle = { ...baseButtonStyle, background: '#c09a06', color: 'white', borderBottom: '6px solid #8b6e00' };

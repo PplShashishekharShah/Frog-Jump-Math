@@ -73,7 +73,7 @@ const titleStyle = {
   fontSize: '2rem',
   margin: '0',
   textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-  fontFamily: 'cursive',
+  fontFamily: "'Lexend', sans-serif",
   display: 'flex',
   alignItems: 'center',
   gap: '10px',
@@ -96,7 +96,7 @@ const modeBadgeStyle = {
   borderRadius: '12px',
   fontSize: '1.2rem',
   fontWeight: 'bold',
-  fontFamily: 'cursive',
+  fontFamily: "'Lexend', sans-serif",
   border: '2px solid rgba(255, 255, 255, 0.4)',
   backdropFilter: 'blur(4px)',
 };

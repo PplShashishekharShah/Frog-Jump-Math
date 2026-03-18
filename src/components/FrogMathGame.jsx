@@ -85,7 +85,7 @@ const titleStyle = {
     fontSize: '2rem',
     margin: '0',
     textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-    fontFamily: 'cursive'
+    fontFamily: "'Lexend', sans-serif"
 };
 
 const backButtonStyle = {
@@ -95,7 +95,7 @@ const backButtonStyle = {
     background: 'rgba(255,255,255,0.2)',
     color: 'white',
     cursor: 'pointer',
-    fontFamily: 'cursive'
+    fontFamily: "'Lexend', sans-serif"
 };
 
 export default FrogMathGame;

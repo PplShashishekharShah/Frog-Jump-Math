@@ -212,7 +212,7 @@ const boardStyle = {
 };
 const overlayValueStyle = {
   position: 'absolute', width: '100px', textAlign: 'center', fontSize: '2.5rem', fontWeight: 'bold', color: '#3e2723', zIndex: 20,
-  fontFamily: 'Comic Sans MS, cursive'
+  fontFamily: "'Lexend', sans-serif"
 };
 const heartContainerStyle = {
   position: 'absolute', top: '15px', display: 'flex', gap: '15px', zIndex: 30

@@ -30,6 +30,7 @@ const containerStyle = {
 
 const labelStyle = {
   color: '#aaa',
+  fontFamily: "'Lexend', sans-serif",
   fontSize: '1rem'
 };
 

@@ -81,7 +81,7 @@ const titleStyle = {
   fontSize: '3.5rem',
   color: '#2e7d32',
   margin: '0',
-  fontFamily: 'cursive',
+  fontFamily: "'Lexend', sans-serif",
   textShadow: '2px 2px 0 #fff'
 };
 
@@ -89,7 +89,7 @@ const subtitleStyle = {
   fontSize: '1.3rem',
   color: '#555',
   margin: '0',
-  fontFamily: 'cursive'
+  fontFamily: "'Lexend', sans-serif"
 };
 
 const buttonContainerStyle = {
@@ -107,7 +107,7 @@ const buttonBaseStyle = {
   fontSize: '1.6rem',
   fontWeight: 'bold',
   cursor: 'pointer',
-  fontFamily: 'cursive',
+  fontFamily: "'Lexend', sans-serif",
   transition: 'transform 0.1s, filter 0.2s',
   boxShadow: '0 8px 0 rgba(0,0,0,0.2)',
   display: 'flex',

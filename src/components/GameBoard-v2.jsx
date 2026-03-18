@@ -112,7 +112,7 @@ const GameBoardV2 = ({
 
         {/* Start Label Image */}
         <div style={{ position: 'absolute', top: '40%', left: '0.5%', transform: 'translateY(-50%)', zIndex: 5 }}>
-          <img src={START_LABEL_IMG} alt="Start" style={{ width: '160px', opacity: 0.99 }} />
+          <img src={START_LABEL_IMG} alt="Start" style={{ width: '170px', opacity: 0.99 }} />
         </div>
 
         {/* Vertical Separator Lines */}
@@ -128,13 +128,13 @@ const GameBoardV2 = ({
         />
 
         {/* Statistics Overlays */}
-        <div style={{ ...overlayValueStyle, left: '37.5%', top: '3.5%' }}>{target}</div>
+        <div style={{ ...overlayValueStyle, left: '40%', top: '4%' }}>{target}</div>
         
         {/* Overwrite 'Remaining' with 'More no.s' */}
         {/* <div style={overwriteLabelStyle}>
           {mode === MODES.ADDITION ? 'More to Add' : 'More no.s to Mult'}
         </div> */}
-        <div style={{ ...overlayValueStyle, left: '71%', top: '3.5%' }}>{remaining}</div>
+        <div style={{ ...overlayValueStyle, left: '72%', top: '4%' }}>{remaining}</div>
 
         <div style={{ ...heartContainerStyle, left: '100px', transform: heartAnim ? 'scale(1.3) rotate(5deg)' : 'scale(1)', transition: 'transform 0.2s' }}>
           {Array.from({ length: 3 }).map((_, i) => (
@@ -266,7 +266,7 @@ const vLineStyle = {
 const overwriteLabelStyle = {
   position: 'absolute', top: '22px', left: '52.5%', background: '#f7ecdaff',
   padding: '2px 12px', fontSize: '0.9rem', fontWeight: 'bold', color: '#3e2723',
-  zIndex: 19, fontFamily: 'Comic Sans MS, cursive'
+  zIndex: 19, fontFamily: "'Lexend', sans-serif"
 };
 
 const equationBoxStyle = {
@@ -276,7 +276,7 @@ const equationBoxStyle = {
   animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)', zIndex: 30
 };
 const equationContentStyle = {
-  fontSize: '2rem', color: '#1b5e20', fontWeight: 'bold', fontFamily: 'Comic Sans MS, cursive'
+  fontSize: '2rem', color: '#1b5e20', fontWeight: 'bold', fontFamily: "'Lexend', sans-serif"
 };
 
 const jumpBackContainerStyle = {
@@ -292,7 +292,7 @@ const goldButtonStyle = {
 const overlayValueStyle = {
   position: 'absolute', width: '100px', textAlign: 'center',
   fontSize: '2.5rem', fontWeight: 'bold', color: '#1B5E20', zIndex: 20,
-  fontFamily: 'Comic Sans MS, cursive'
+  fontFamily: "'Lexend', sans-serif"
 };
 const heartContainerStyle = {
   position: 'absolute', top: '15px', display: 'flex', gap: '15px', zIndex: 30

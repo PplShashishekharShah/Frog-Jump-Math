@@ -44,7 +44,7 @@ const LilyPadV2 = ({ value, isSelected, isSunk, onClick, index }) => {
         fontSize: '2.2rem',
         fontWeight: 'bold',
         textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-        fontFamily: 'Comic Sans MS, cursive',
+        fontFamily: "'Lexend', sans-serif",
         marginBottom: '10px',
         transform: isSunk ? 'translateY(5px)' : 'none'
       }}>
